@@ -44,6 +44,7 @@ private:
 
     /**
      * resets the PermutationIterator with a new word
+     * No longer used, as I switchedto "refresh_helperator" instead, but left here for documentation purposes
      * @param word the word that will now be the source of this iterator's data
      */
     void refresh(const std::string &word);
@@ -53,6 +54,11 @@ private:
      * the helper iterator based off the new tail
      */
     void rotate_if_helperator_exhausted();
+
+    /**
+     * creates a new helperator, and frees up the memory from the previous heap allocation
+     */
+    void refresh_helperator();
 };
 
 /**

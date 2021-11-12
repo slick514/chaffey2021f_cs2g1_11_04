@@ -37,7 +37,11 @@ void PermutationIterator::rotate_if_helperator_exhausted() {
     if( !helperator->has_more_permutations()) {
         rotate_word();
         deincrement_count();
-        helperator->refresh(tail);
+        refresh_helperator();
+        // This is how I was doing it previously, before I figured out the allocation/deallocation thing...
+        // Six of one, half a dozen of the other, really, but I'm glad that I feel like I've got a better handle on
+        // pointers and memory allocation...
+        // helperator->refresh(tail);
     }
 }
 
@@ -74,4 +78,10 @@ void PermutationIterator::refresh(const std::string &word) {
             helperator->refresh(tail);
         permutation_count = (int)word.length();
     }
+}
+
+void PermutationIterator::refresh_helperator() {
+    PermutationIterator *old_heap_address = helperator;
+    helperator = new PermutationIterator(tail);
+    delete old_heap_address;
 }
