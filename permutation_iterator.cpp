@@ -38,9 +38,12 @@ void PermutationIterator::rotate_if_helperator_exhausted() {
         rotate_word();
         deincrement_count();
         refresh_helperator();
-        // This is how I was doing it previously, before I figured out the allocation/deallocation thing...
-        // Six of one, half a dozen of the other, really, but I'm glad that I feel like I've got a better handle on
-        // pointers and memory allocation...
+
+        /*
+         * This is how I was doing it previously, before I figured out the allocation/deallocation thing...
+         * Six of one, half a dozen of the other, really, but I'm glad that I feel like I've got a better handle on
+         * pointers and memory allocation...
+         */
         // helperator->refresh(tail);
     }
 }
