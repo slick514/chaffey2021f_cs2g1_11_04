@@ -21,9 +21,9 @@ std::string PermutationIterator::next_permutation() {
     std::stringstream builder;
     if( has_more_permutations()) {
         builder << first_char;
-        if( helperator == nullptr ) {   //single letter, no helper to worry about
+        if( helperator == nullptr ) {         // Single letter, no helper to worry about
             deincrement_count();
-        } else {                        // Take care of helperator functionality
+        } else {                              // Take care of helperator functionality
             if( helperator->has_more_permutations()) {
                 builder << helperator->next_permutation();
                 rotate_if_helperator_exhausted();

@@ -30,7 +30,7 @@ private:
     char first_char;
     std::string tail;
     int permutation_count;
-    PermutationIterator *helperator = nullptr;
+    PermutationIterator *helperator = nullptr;  // "helperator" = "helper iterator"
 
     /**
      * assigns the first character of the tail as the new first_char; tacks the old first_char on to the end of the tail
