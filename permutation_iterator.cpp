@@ -9,9 +9,10 @@
 PermutationIterator::PermutationIterator(const std::string &word) {
     if( !word.empty()) {
         first_char = word.at(0);
-        end_word = word.length() > 1 ? remove_first_character(word) : "";
-        if( !end_word.empty())
-            helperator = new PermutationIterator(end_word);
+        if( word.length() > 1 ) {
+            tail = remove_first_character(word);
+            helperator = new PermutationIterator(tail);
+        }
     }
     permutation_count = (int)word.length();
 }
@@ -20,28 +21,31 @@ std::string PermutationIterator::next_permutation() {
     std::stringstream builder;
     if( has_more_permutations()) {
         builder << first_char;
-        if( helperator == nullptr ) {  //single letter, no helper to worry about
+        if( helperator == nullptr ) {   //single letter, no helper to worry about
             deincrement_count();
-        } else {
+        } else {                        // Take care of helperator functionality
             if( helperator->has_more_permutations()) {
                 builder << helperator->next_permutation();
-                if( !helperator->has_more_permutations()) {
-                    rotate_word();
-                    deincrement_count();
-                    helperator->refresh(end_word);
-                }
+                rotate_if_helperator_exhausted();
             }
         }
     }
-    std::string rtn_value = builder.str();
-    return rtn_value;
+    return builder.str();
+}
+
+void PermutationIterator::rotate_if_helperator_exhausted() {
+    if( !helperator->has_more_permutations()) {
+        rotate_word();
+        deincrement_count();
+        helperator->refresh(tail);
+    }
 }
 
 void PermutationIterator::rotate_word() {
-    if( !end_word.empty()) {
-        char new_first_char = end_word.at(0);
-        end_word.erase(0, 1);
-        end_word.push_back(first_char);
+    if( !tail.empty()) {
+        char new_first_char = tail.at(0);
+        tail.erase(0, 1);
+        tail.push_back(first_char);
         first_char = new_first_char;
     }
 }
@@ -50,10 +54,8 @@ bool PermutationIterator::has_more_permutations() const {
     return permutation_count > 0;
 }
 
-std::string PermutationIterator::remove_first_character(const std::string &old_word) {
-    std::string new_word = old_word;
-    new_word.erase(0, 1);
-    return new_word;
+std::string remove_first_character(const std::string &old_word) {
+    return old_word.substr(1, old_word.length());
 }
 
 void PermutationIterator::deincrement_count() {
@@ -67,9 +69,9 @@ PermutationIterator::~PermutationIterator() {
 void PermutationIterator::refresh(const std::string &word) {
     if( !word.empty()) {
         first_char = word.at(0);
-        end_word = word.length() > 1 ? remove_first_character(word) : "";
+        tail = word.length() > 1 ? remove_first_character(word) : "";
         if( helperator != nullptr && helperator->has_more_permutations())
-            helperator->refresh(end_word);
+            helperator->refresh(tail);
         permutation_count = (int)word.length();
     }
 }
