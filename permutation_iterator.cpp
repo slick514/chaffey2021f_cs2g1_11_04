@@ -23,7 +23,7 @@ std::string PermutationIterator::next_permutation() {
         builder << first_char;
         if( tail.empty()) {         // Single letter, no helper to worry about
             deincrement_count();
-        } else {                              // Take care of helperator functionality
+        } else {                    // If we have a tail-string, we must account for helper-iterator functionality
             if( helperator->has_more_permutations()) {
                 builder << helperator->next_permutation();
                 rotate_if_helperator_exhausted();
