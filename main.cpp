@@ -3,7 +3,7 @@
 
 using namespace std;
 
-const int MAX_CHARS = 9;
+const int MAX_CHARS = 8;
 
 int main() {
     /* 
